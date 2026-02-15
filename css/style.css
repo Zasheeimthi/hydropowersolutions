@@ -9165,7 +9165,7 @@ Section Title
 
 ***/
 .brand-section-two .outer-box {
-  padding-bottom: 40px;
+  padding-bottom: 20px;
   border-bottom: 1px solid #e7ebef;
 }
 
@@ -14142,6 +14142,7 @@ CONTACT Details
 @media (max-width: 1599.98px) {
   .service-card-items {
     padding: 35px;
+    min-height: 450px;
   }
 }
 
