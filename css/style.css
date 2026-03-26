@@ -14137,12 +14137,15 @@ CONTACT Details
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 50px;
   padding-bottom: 30px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 1599.98px) {
   .service-card-items {
     padding: 35px;
-    min-height: 450px;
+    min-height: 350px;
   }
 }
 
@@ -14180,6 +14183,7 @@ CONTACT Details
   background-repeat: no-repeat;
   background-size: 0% 2px;
   display: inline;
+  font-size: 20px;
 }
 
 .service-card-items .content h3 a:hover {
