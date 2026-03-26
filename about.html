@@ -71,6 +71,42 @@
       font-weight: 600;
       color: #25D366;
     }
+    #msg {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 400;
+      display: none;
+    }
+ 
+    #msg.success {
+      background: rgba(200,240,100,0.1);
+      border: 1px solid rgba(200,240,100,0.25);
+      color: var(--accent);
+    }
+ 
+    #msg.error {
+      background: rgba(255,90,90,0.08);
+      border: 1px solid rgba(255,90,90,0.2);
+      color: #ff7a7a;
+    }
+    button[type="submit"]:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+ 
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(0,0,0,0.2);
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+ 
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 
@@ -1121,7 +1157,7 @@
                   <p class="sub-title">let's collaborate and create something amazing together!</p>
                 </div>
 
-                <form action="#0">
+                <form id="contactForm" name="contactForm" method="POST" action="https://api.web3forms.com/submit">
                   <div class="row g-4">
                     <div class="col-sm-6">
                       <div class="input">
@@ -1131,7 +1167,7 @@
                             d="M9.78125 9.5C12.0938 9.5 14 11.4062 14 13.7188V14.5C14 15.3438 13.3125 16 12.5 16H1.5C0.65625 16 0 15.3438 0 14.5V13.7188C0 11.4062 1.875 9.5 4.1875 9.5C5.09375 9.5 5.5 10 7 10C8.46875 10 8.875 9.5 9.78125 9.5ZM12.5 14.5V13.7188C12.5 12.2188 11.2812 11 9.78125 11C9.3125 11 8.59375 11.5 7 11.5C5.375 11.5 4.65625 11 4.1875 11C2.6875 11 1.5 12.2188 1.5 13.7188V14.5H12.5ZM7 9C4.5 9 2.5 7 2.5 4.5C2.5 2.03125 4.5 0 7 0C9.46875 0 11.5 2.03125 11.5 4.5C11.5 7 9.46875 9 7 9ZM7 1.5C5.34375 1.5 4 2.875 4 4.5C4 6.15625 5.34375 7.5 7 7.5C8.625 7.5 10 6.15625 10 4.5C10 2.875 8.625 1.5 7 1.5Z"
                             fill="#696969" />
                         </svg>
-                        <input type="text" placeholder="Your Name">
+                        <input name="name" type="text" placeholder="Your Name" required>
                       </div>
                     </div>
                     <div class="col-sm-6">
@@ -1142,7 +1178,7 @@
                             d="M14.5 0C15.3125 0 16 0.6875 16 1.5V10.5C16 11.3438 15.3125 12 14.5 12H1.5C0.65625 12 0 11.3438 0 10.5V1.5C0 0.6875 0.65625 0 1.5 0H14.5ZM14.5 1.5H1.5V2.78125C2.1875 3.375 3.3125 4.25 5.6875 6.125C6.21875 6.53125 7.25 7.53125 8 7.5C8.71875 7.53125 9.75 6.53125 10.2812 6.125C12.6562 4.25 13.7812 3.375 14.5 2.78125V1.5ZM1.5 10.5H14.5V4.71875C13.7812 5.28125 12.75 6.09375 11.2188 7.3125C10.5 7.84375 9.3125 9.03125 8 9C6.65625 9.03125 5.4375 7.84375 4.75 7.3125C3.21875 6.09375 2.1875 5.28125 1.5 4.71875V10.5Z"
                             fill="#696969" />
                         </svg>
-                        <input type="email" placeholder="Email Address">
+                        <input type="email" name="email" placeholder="Email Address" required>
                       </div>
                     </div>
                   </div>
@@ -1154,10 +1190,14 @@
                     <option value="6">Web Designer</option>
                     <option value="7">Financial Advice</option>
                   </select> -->
-                  <textarea class="mt-4" name="masage" id="masage" placeholder="Write a Message"></textarea>
-                  <button class="btn-two-rounded mt-30">Send Message Us <i
-                      class="fa-regular fa-angle-right"></i></button>
+                  <textarea class="mt-4" name="message" id="message" placeholder="Write a Message"></textarea>
+                  <button type="submit" id="submitBtn" class="btn-two-rounded mt-30">
+                    <span id="btnText">Send Message Us</span>
+                    <span class="spinner" id="spinner"></span>                     
+                    <i class="fa-regular fa-angle-right"></i>
+                  </button>
                 </form>
+                <div id="msg"></div>
               </div>
             </div>
           </div>
@@ -1286,6 +1326,49 @@
     integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
     data-cf-beacon='{"version":"2024.11.0","token":"88f4fa328f314d4c95a104b4a60b2313","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
     crossorigin="anonymous"></script>
+    <script>
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const spinner = document.getElementById('spinner');
+      const btnText = document.getElementById('btnText');
+      const msg = document.getElementById('msg');
+ 
+      btn.disabled = true;
+      spinner.style.display = 'block';
+      btnText.textContent = 'Sending...';
+      msg.style.display = 'none';
+ 
+      const formData = new FormData(this);
+      formData.append("access_key", "18a38983-d5f3-49c9-be04-87823c95625e"); // 🔑 Replace this
+ 
+      try {
+        console.log("TRy entered");
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+ 
+        if (data.success) {
+          msg.className = 'success';
+          msg.textContent = '✓ Message sent! We\'ll reply soon.';
+          this.reset();
+        } else {
+          msg.className = 'error';
+          msg.textContent = '✗ Failed to send. Please try again.';
+        }
+      } catch {
+        msg.className = 'error';
+        msg.textContent = '✗ Network error. Please try again.';
+      }
+ 
+      msg.style.display = 'block';
+      btn.disabled = false;
+      spinner.style.display = 'none';
+      btnText.textContent = 'Send Message';
+    });
+  </script>
 </body>
 
 

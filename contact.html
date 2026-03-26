@@ -95,6 +95,42 @@
       font-weight: 600;
       color: #25D366;
     }
+    #msg {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 400;
+      display: none;
+    }
+ 
+    #msg.success {
+      background: rgba(200,240,100,0.1);
+      border: 1px solid rgba(200,240,100,0.25);
+      color: var(--accent);
+    }
+ 
+    #msg.error {
+      background: rgba(255,90,90,0.08);
+      border: 1px solid rgba(255,90,90,0.2);
+      color: #ff7a7a;
+    }
+    button[type="submit"]:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+ 
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(0,0,0,0.2);
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+ 
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 
@@ -345,22 +381,27 @@
                   <p class="text wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">Your email address will
                     not be published. Required fields are marked *</p>
                 </div>
-                <form id="contact_form" name="contact_form"
-                  action="https://html.kodesolution.com/2025/consultez-html-v2/includes/sendmail.php" method="post">
+                <form id="contactForm" name="contactForm" method="POST" action="https://api.web3forms.com/submit">
+                  <!-- <input type="hidden" name="access_key" value="18a38983-d5f3-49c9-be04-87823c95625e"> -->
                   <div class="type-feild">
                     <i class="fa-light fa-user"></i>
-                    <input name="form_name" class="required" type="text" placeholder="Your Name*">
+                    <input name="name" class="required" type="text" placeholder="Your Name*" required>
                   </div>
                   <div class="type-feild">
                     <i class="fa-light fa-envelope"></i>
-                    <input name="form_email" class="required" type="email" placeholder="Email Address*">
+                    <input name="email" class="required" type="email" placeholder="Email Address*" required>
                   </div>
                   <div class="type-feild">
                     <i class="fa-light fa-pen-to-square"></i>
-                    <textarea name="form_message" class="required" placeholder="Enter Your Messege here"></textarea>
+                    <textarea name="message" class="required" placeholder="Enter Your Messege here"></textarea>
                   </div>
-                  <button class="btn-two"><i class="fa-light fa-paper-plane"></i> Get In Touch</button>
+                  <button type="submit" id="submitBtn" class="btn-two">
+                    <i class="fa-light fa-paper-plane"></i>
+                    <span id="btnText">Get In Touch</span>
+                    <span class="spinner" id="spinner"></span>                    
+                  </button>
                 </form>
+                <div id="msg"></div>
               </div>
             </div>
           </div>
@@ -492,6 +533,49 @@
     integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
     data-cf-beacon='{"version":"2024.11.0","token":"88f4fa328f314d4c95a104b4a60b2313","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
     crossorigin="anonymous"></script>
+    <script>
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const spinner = document.getElementById('spinner');
+      const btnText = document.getElementById('btnText');
+      const msg = document.getElementById('msg');
+ 
+      btn.disabled = true;
+      spinner.style.display = 'block';
+      btnText.textContent = 'Sending...';
+      msg.style.display = 'none';
+ 
+      const formData = new FormData(this);
+      formData.append("access_key", "18a38983-d5f3-49c9-be04-87823c95625e"); // 🔑 Replace this
+ 
+      try {
+        console.log("TRy entered");
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+ 
+        if (data.success) {
+          msg.className = 'success';
+          msg.textContent = '✓ Message sent! We\'ll reply soon.';
+          this.reset();
+        } else {
+          msg.className = 'error';
+          msg.textContent = '✗ Failed to send. Please try again.';
+        }
+      } catch {
+        msg.className = 'error';
+        msg.textContent = '✗ Network error. Please try again.';
+      }
+ 
+      msg.style.display = 'block';
+      btn.disabled = false;
+      spinner.style.display = 'none';
+      btnText.textContent = 'Send Message';
+    });
+  </script>
 </body>
 
 
