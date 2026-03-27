@@ -729,7 +729,7 @@
     </section>
     <!-- Team area end here -->
 
-    <!-- Footer area start here -->
+     <!-- Footer area start here -->
         <footer class="main-footer footer-style-two mt-100">
             <div class="container">
 
@@ -857,6 +857,50 @@
     integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
     data-cf-beacon='{"version":"2024.11.0","token":"88f4fa328f314d4c95a104b4a60b2313","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
     crossorigin="anonymous"></script>
+
+     <script>
+        document.getElementById('footerContactForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+            const btn = document.getElementById('footerSubmitBtn');
+            const spinner = document.getElementById('footerSpinner');
+            const btnText = document.getElementById('footerBtnText');
+            const msg = document.getElementById('footerMsg');
+ 
+      btn.disabled = true;
+      spinner.style.display = 'block';
+      btnText.textContent = 'Sending...';
+      msg.style.display = 'none';
+ 
+      const formData = new FormData(this);
+      formData.append("access_key", "18a38983-d5f3-49c9-be04-87823c95625e"); // 🔑 Replace this
+ 
+      try {
+        console.log("TRy entered");
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+ 
+        if (data.success) {
+          msg.className = 'success';
+          msg.textContent = '✓ Message sent! We\'ll reply soon.';
+          this.reset();
+        } else {
+          msg.className = 'error';
+          msg.textContent = '✗ Failed to send. Please try again.';
+        }
+      } catch {
+        msg.className = 'error';
+        msg.textContent = '✗ Network error. Please try again.';
+      }
+ 
+      msg.style.display = 'block';
+      btn.disabled = false;
+      spinner.style.display = 'none';
+            btnText.textContent = 'Sign up now';
+    });
+  </script>
 </body>
 
 

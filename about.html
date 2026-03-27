@@ -1311,7 +1311,7 @@
     <!-- Contact area end here -->
 
 
-    <!-- Footer area start here -->
+     <!-- Footer area start here -->
         <footer class="main-footer footer-style-two mt-100">
             <div class="container">
 
@@ -1346,10 +1346,10 @@
                                 <form id="footerContactForm" name="footerContactForm" method="POST" action="https://api.web3forms.com/submit">
                                     <div class="input-feild">
                                         <input name="email" class="required" type="email" placeholder="Email Address*" required autocomplete="email" aria-label="Email address">
-                                    <button type="submit" id="footerSubmitBtn" class="btn-one-rounded" style="background-color: #fff;">
-                                      <span id="footerBtnText">Sign up now</span>
+                                        <button type="submit" id="footerSubmitBtn" class="btn-one-rounded" style="background-color: #fff;">
+                                            <span id="footerBtnText">Sign up now</span>
                                             <i class="fa-regular fa-angle-right"></i>
-                                      <span class="footer-spinner" id="footerSpinner" aria-hidden="true"></span>
+                                            <span class="footer-spinner" id="footerSpinner" aria-hidden="true"></span>
                                         </button>
                                     </div>
                                 </form>
@@ -1437,13 +1437,13 @@
     integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
     data-cf-beacon='{"version":"2024.11.0","token":"88f4fa328f314d4c95a104b4a60b2313","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
     crossorigin="anonymous"></script>
-    <script>
-    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+ <script>
+        document.getElementById('footerContactForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      const spinner = document.getElementById('spinner');
-      const btnText = document.getElementById('btnText');
-      const msg = document.getElementById('msg');
+            const btn = document.getElementById('footerSubmitBtn');
+            const spinner = document.getElementById('footerSpinner');
+            const btnText = document.getElementById('footerBtnText');
+            const msg = document.getElementById('footerMsg');
  
       btn.disabled = true;
       spinner.style.display = 'block';
@@ -1477,9 +1477,10 @@
       msg.style.display = 'block';
       btn.disabled = false;
       spinner.style.display = 'none';
-      btnText.textContent = 'Send Message';
+            btnText.textContent = 'Sign up now';
     });
   </script>
+
 </body>
 
 
