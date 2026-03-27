@@ -170,6 +170,10 @@ body {
     max-width: 100%;
     overflow-x: hidden;
   }
+
+  .sticky-phone-info {
+    display: none !important;
+  }
 }
 
 p,
