@@ -163,6 +163,15 @@ body {
   line-height: var(--body-line-height);
 }
 
+@media (max-width: 991.98px) {
+  html,
+  body,
+  .page-wrapper {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+}
+
 p,
 .text {
   color: var(--text-color);
