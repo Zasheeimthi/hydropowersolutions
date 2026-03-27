@@ -164,7 +164,7 @@
             font-weight: 600;
             color: #25D366;
         }
-        #msg {
+        #footerMsg {
         margin-top: 16px;
         padding: 12px 16px;
         border-radius: var(--radius);
@@ -173,30 +173,89 @@
         display: none;
         }
     
-        #msg.success {
+        #footerMsg.success {
         background: rgba(200,240,100,0.1);
         border: 1px solid rgba(200,240,100,0.25);
-        color: var(--accent);
+        color: #fff;
         }
     
-        #msg.error {
+        #footerMsg.error {
         background: rgba(255,90,90,0.08);
         border: 1px solid rgba(255,90,90,0.2);
-        color: #ff7a7a;
+        color: #fff;
         }
-        button[type="submit"]:disabled {
+        #footerSubmitBtn:disabled {
         opacity: 0.5;
         cursor: not-allowed;
         transform: none;
         }
     
-        .spinner {
+        .footer-spinner {
         width: 16px; height: 16px;
         border: 2px solid rgba(0,0,0,0.2);
         border-top-color: #000;
         border-radius: 50%;
         animation: spin 0.7s linear infinite;
         display: none;
+        }
+
+        .main-footer .footer-widget.about-widget form {
+        width: 100%;
+        }
+
+        .main-footer .footer-widget.about-widget .input-feild {
+        position: static;
+        display: block;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        align-items: center;
+        width: 100%;
+        }
+
+        .main-footer .footer-widget.about-widget .input-feild input {
+        width: 100%;
+        min-width: 0;
+        height: 54px;
+        padding: 0 16px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 10px;
+        color: #1f2a1f;
+        box-sizing: border-box;
+        }
+
+        .main-footer .footer-widget.about-widget .input-feild input::placeholder {
+        color: #6e746e;
+        }
+
+        .main-footer .footer-widget.about-widget .input-feild button {
+        position: static;
+        min-width: 170px;
+        width: auto;
+        height: 54px;
+        line-height: 1;
+        padding: 0 20px;
+        border-radius: 30px;
+        border: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        white-space: nowrap;
+        }
+
+        .main-footer .footer-widget.about-widget .input-feild button .footer-spinner {
+        flex: 0 0 auto;
+        }
+
+        @media (max-width: 575.98px) {
+        .main-footer .footer-widget.about-widget .input-feild {
+            grid-template-columns: 1fr;
+        }
+
+        .main-footer .footer-widget.about-widget .input-feild button {
+            width: 100%;
+            min-width: 0;
+        }
         }
     
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -2057,27 +2116,17 @@
                                     <!-- <p class="text">No credit card requirement it’s full free for all</p> -->
                                 </div>
 
-                                <form id="contactForm" name="contactForm" method="POST" action="https://api.web3forms.com/submit">
-                                <div class="input-feild">
-                                    <input name="email" class="required" type="email" placeholder="Email Address*" required>
-                                    <!-- <button type="submit" id="submitBtn" class="btn-one-rounded" style="background-color: #fff;">
-                                        <span id="btnText">Sign up now</span>
-                                        <i class="fa-regular fa-angle-right"></i>
-                                        <span class="spinner" id="spinner"></span>
-                                    </button> -->
-                                     <button type="submit" id="submitBtn" class="btn-one-rounded" style="background-color: #fff;">
-                                        <span id="btnText">Sign up now</span>
-                                        <i class="fa-regular fa-angle-right"></i>
-                                        <span class="spinner" id="spinner"></span>
-                                    </button>
-                                    <!-- <button type="submit" id="submitBtn" class="btn-one-rounded" style="background-color: #fff;">
-                                        <span id="btnText">Sign up now</span>
-                                        <i class="fa-regular fa-angle-right"></i>
-                                        <span class="spinner" id="spinner"></span>
-                                    </button> -->
-                                </div>
+                                <form id="footerContactForm" name="footerContactForm" method="POST" action="https://api.web3forms.com/submit">
+                                    <div class="input-feild">
+                                        <input name="email" class="required" type="email" placeholder="Email Address*" required autocomplete="email" aria-label="Email address">
+                                        <button type="submit" id="footerSubmitBtn" class="btn-one-rounded" style="background-color: #fff;">
+                                            <span id="footerBtnText">Sign up now</span>
+                                            <i class="fa-regular fa-angle-right"></i>
+                                            <span class="footer-spinner" id="footerSpinner" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
                                 </form>
-                                <div id="msg"></div>
+                                <div id="footerMsg"></div>
                             </div>
                         </div>
                         <div class="col-sm-6 col-lg-3 col-xl-2">
@@ -2114,7 +2163,7 @@
                 </div>
 
                 <div class="footer-bottom">
-                    <p class="copyright-text">Copyright ©2026, <a href="#0">Hydropower Solutions</a> All Rights Reserved
+                    <p class="copyright-text">Copyright ©2026 <a href="#0">Hydropower Solutions</a>. All Rights Reserved.
                     </p>
                     <ul class="footer-nav">
                         <li><a href="#0"><i class="fa-brands fa-facebook-f"></i></a></li>
@@ -2164,12 +2213,12 @@
         crossorigin="anonymous"></script>
     
     <script>
-    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+        document.getElementById('footerContactForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      const spinner = document.getElementById('spinner');
-      const btnText = document.getElementById('btnText');
-      const msg = document.getElementById('msg');
+            const btn = document.getElementById('footerSubmitBtn');
+            const spinner = document.getElementById('footerSpinner');
+            const btnText = document.getElementById('footerBtnText');
+            const msg = document.getElementById('footerMsg');
  
       btn.disabled = true;
       spinner.style.display = 'block';
@@ -2203,7 +2252,7 @@
       msg.style.display = 'block';
       btn.disabled = false;
       spinner.style.display = 'none';
-      btnText.textContent = 'Send Message';
+            btnText.textContent = 'Sign up now';
     });
   </script>
 </body>

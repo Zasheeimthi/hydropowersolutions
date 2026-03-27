@@ -101,6 +101,110 @@
       color: #25D366;
     }
   </style>
+<style>
+/* Footer Form UI Sync */
+#footerMsg {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 400;
+  display: none;
+}
+
+#footerMsg.success {
+  background: rgba(200,240,100,0.1);
+  border: 1px solid rgba(200,240,100,0.25);
+  color: #fff;
+}
+
+#footerMsg.error {
+  background: rgba(255,90,90,0.08);
+  border: 1px solid rgba(255,90,90,0.2);
+  color: #fff;
+}
+
+#footerSubmitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.footer-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+
+.main-footer .footer-widget.about-widget form {
+  width: 100%;
+}
+
+.main-footer .footer-widget.about-widget .input-feild {
+  position: static;
+  display: block;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+}
+
+.main-footer .footer-widget.about-widget .input-feild input {
+  width: 100%;
+  min-width: 0;
+  height: 54px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  color: #1f2a1f;
+  box-sizing: border-box;
+}
+
+.main-footer .footer-widget.about-widget .input-feild input::placeholder {
+  color: #6e746e;
+}
+
+.main-footer .footer-widget.about-widget .input-feild button {
+  position: static;
+  min-width: 170px;
+  width: auto;
+  height: 54px;
+  line-height: 1;
+  padding: 0 20px;
+  border-radius: 30px;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.main-footer .footer-widget.about-widget .input-feild button .footer-spinner {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 575.98px) {
+  .main-footer .footer-widget.about-widget .input-feild {
+    grid-template-columns: 1fr;
+  }
+
+  .main-footer .footer-widget.about-widget .input-feild button {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
 </head>
 
 <body>
@@ -370,14 +474,14 @@
     
 
     <!-- Footer area start here -->
-    <footer class="main-footer footer-style-two mt-100">
-      <div class="container">
+        <footer class="main-footer footer-style-two mt-100">
+            <div class="container">
 
-        <div class="footer-top">
-          <div class="logo">
-            <a href="index.html"><img src="images/logo/white-logo.svg" alt="Logo"></a>
-          </div>
-          <!-- <div class="subscrive-box">
+                <div class="footer-top">
+                    <div class="logo">
+                        <a href="index.html"><img src="images/logo/white-logo.svg" alt="Logo"></a>
+                    </div>
+                    <!-- <div class="subscrive-box">
                         <h3 class="title">Subscribe Newsletter</h3>
                         <div class="input-feild">
                             <i class="fa-sharp fa-light fa-envelope"></i>
@@ -386,79 +490,86 @@
                                     class="fa-regular fa-angle-right"></i></a>
                         </div>
                     </div> -->
-        </div>
-
-        <div class="widgets-section">
-
-          <div class="row g-5 justify-content-between">
-            <div class="col-sm-12 col-lg-5 col-xl-6">
-              <div class="footer-widget about-widget">
-
-
-
-                <div class="sec-title mb-40">
-                  <h2 class="title text-white">Ready Discover More? Contact Us Today!</h2>
-                  <!-- <p class="text">No credit card requirement it’s full free for all</p> -->
                 </div>
 
-                <div class="input-feild">
-                  <input type="text" placeholder="Email Address">
-                  <a class="btn-one-rounded" href="#0" style="background-color: #fff;">Sign up now
-                    <i class="fa-regular fa-angle-right"></i></a>
+                <div class="widgets-section">
+
+                    <div class="row g-5 justify-content-between">
+                        <div class="col-sm-12 col-lg-5 col-xl-6">
+                            <div class="footer-widget about-widget">
+
+
+
+                                <div class="sec-title mb-40">
+                                    <h2 class="title text-white">Ready Discover More? Contact Us Today!</h2>
+                                    <!-- <p class="text">No credit card requirement it’s full free for all</p> -->
+                                </div>
+
+                                <form id="footerContactForm" name="footerContactForm" method="POST" action="https://api.web3forms.com/submit">
+                                    <div class="input-feild">
+                                        <input name="email" class="required" type="email" placeholder="Email Address*" required autocomplete="email" aria-label="Email address">
+                                        <button type="submit" id="footerSubmitBtn" class="btn-one-rounded" style="background-color: #fff;">
+                                            <span id="footerBtnText">Sign up now</span>
+                                            <i class="fa-regular fa-angle-right"></i>
+                                            <span class="footer-spinner" id="footerSpinner" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                </form>
+                                <div id="footerMsg"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-xl-2">
+                            <div class="footer-widget links-widget">
+                                <h4 class="widget-title">Services</h4>
+                                <div class="widget-content">
+                                    <ul class="user-links">
+                                        <li><a href="./">Home</a></li>
+                                        <li><a href="about.html">About Us</a></li>
+                                        <li><a href="power-transmission-components.html">Products</a></li>
+                                        <li><a href="contact.html">Contact</a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-4 col-xl-3">
+                            <div class="footer-widget contact-widget">
+                                <h4 class="widget-title">Locations</h4>
+                                <div class="widget-content">
+                                    <h5 class="text">Ibn Alsheikh Street 3865 - Al Wurud Dist. 8949 , 16278 - AlKharj ,
+                                        Saudi Arabia</h5>
+                                </div>
+                                <h4 class="widget-title mt-30">Contact</h4>
+                                <div class="widget-content">
+                                    <a href="#"
+                                        data-cfemail="b5c6c0c5c5dac7c1f5d2d8d4dcd99bd6dad8">info@hydropowersolutions.sa</span></a>
+                                    <h4 class="nuber"><a href="tel:012345688">+966-59-1120-700</a></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-              </div>
+
+                <div class="footer-bottom">
+                    <p class="copyright-text">Copyright ©2026 <a href="#0">Hydropower Solutions</a>. All Rights Reserved.
+                    </p>
+                    <ul class="footer-nav">
+                        <li><a href="#0"><i class="fa-brands fa-facebook-f"></i></a></li>
+                        <li><a href="#0"><i class="fa-brands fa-instagram"></i></a></li>
+
+                    </ul>
+                    <button class="goTop-btn"><i class="fa-solid fa-angles-up"></i> <i
+                            class="fa-solid fa-angles-up"></i></button>
+                </div>
+
             </div>
-            <div class="col-sm-6 col-lg-3 col-xl-2">
-              <div class="footer-widget links-widget">
-                <h4 class="widget-title">Services</h4>
-                <div class="widget-content">
-                  <ul class="user-links">
-                    <li><a href="#0">Home</a></li>
-                    <li><a href="#0">About Us</a></li>
-                    <li><a href="#0">Products</a></li>
-                    <li><a href="#0">Solutions</a></li>
-                    <li><a href="#0">Contact</a></li>
 
-                  </ul>
-                </div>
-              </div>
+            <div class="sec-shape">
+                <img class="animation__rotateAndScale" src="images/shape/globe-right.png" alt="Image">
             </div>
-            <div class="col-sm-6 col-lg-4 col-xl-3">
-              <div class="footer-widget contact-widget">
-                <h4 class="widget-title">Locations</h4>
-                <div class="widget-content">
-                  <h5 class="text">Ibn Alsheikh Street 3865 - Al Wurud Dist. 8949 , 16278 - AlKharj ,
-                    Saudi Arabia</h5>
-                </div>
-                <h4 class="widget-title mt-30">Contact</h4>
-                <div class="widget-content">
-                  <a href="#" data-cfemail="b5c6c0c5c5dac7c1f5d2d8d4dcd99bd6dad8">info@hydropowersolutions.sa</span></a>
-                  <h4 class="nuber"><a href="tel:012345688">+966-59-1120-700</a></h4>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="footer-bottom">
-          <p class="copyright-text">Copyright ©2026, <a href="#0">Hydropower Solutions</a> All Rights Reserved
-          </p>
-          <ul class="footer-nav">
-            <li><a href="#0"><i class="fa-brands fa-facebook-f"></i></a></li>
-            <li><a href="#0"><i class="fa-brands fa-instagram"></i></a></li>
-
-          </ul>
-          <button class="goTop-btn"><i class="fa-solid fa-angles-up"></i> <i class="fa-solid fa-angles-up"></i></button>
-        </div>
-
-      </div>
-
-      <div class="sec-shape">
-        <img class="animation__rotateAndScale" src="images/shape/globe-right.png" alt="Image">
-      </div>
-    </footer>
-    <!-- Footer area end here -->
+        </footer>
+        <!-- Footer area end here -->
 
   </div><!-- End Page Wrapper -->
   <!-- Scroll To Top -->
