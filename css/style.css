@@ -4889,6 +4889,15 @@ Main Header
   }
 }
 
+@media (max-width: 575.98px) {
+  .mbl-view{
+    margin-top: 20px;
+  }
+}
+
+ 
+
+
 .header-style-one .outer-box .search-btn .flaticon-search,
 .header-style-seven .outer-box .search-btn .flaticon-search,
 .header-style-six .outer-box .search-btn .flaticon-search,
