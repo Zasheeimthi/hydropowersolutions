@@ -631,15 +631,15 @@
  
         if (data.success) {
           msg.className = 'success';
-          msg.textContent = 'âœ“ Message sent! We\'ll reply soon.';
+          msg.textContent = '✓ Message sent! We\'ll reply soon.';
           this.reset();
         } else {
           msg.className = 'error';
-          msg.textContent = 'âœ— Failed to send. Please try again.';
+          msg.textContent = '✗ Failed to send. Please try again.';
         }
       } catch {
         msg.className = 'error';
-        msg.textContent = 'âœ— Network error. Please try again.';
+        msg.textContent = '✗ Network error. Please try again.';
       }
  
       msg.style.display = 'block';
