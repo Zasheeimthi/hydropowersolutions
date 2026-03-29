@@ -110,7 +110,7 @@
   </style>
 <style>
 /* Footer Form UI Sync */
-#footerMsg {
+#footerMsg, #footerMsg1 {
   margin-top: 16px;
   padding: 12px 16px;
   border-radius: var(--radius);
@@ -119,25 +119,29 @@
   display: none;
 }
 
-#footerMsg.success {
+#footerMsg.success, #footerMsg1.success {
   background: rgba(200,240,100,0.1);
   border: 1px solid rgba(200,240,100,0.25);
-  color: #fff;
+  color: #000;
 }
 
-#footerMsg.error {
+#footerMsg.error, #footerMsg1.error {
   background: rgba(255,90,90,0.08);
   border: 1px solid rgba(255,90,90,0.2);
-  color: #fff;
+  color: #000;
 }
 
-#footerSubmitBtn:disabled {
+#footerMsg1.success, #footerMsg1.error {
+  color: #fff !important;
+}
+
+#footerSubmitBtn:disabled, #footerSubmitBtn1:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;
 }
 
-.footer-spinner {
+.footer-spinner, .footer-spinner1 {
   width: 16px;
   height: 16px;
   border: 2px solid rgba(0,0,0,0.2);
@@ -387,7 +391,7 @@
                 experience. <br>We believe in
                 long-term partnerships, transparent communication, and delivering the right
                 product for the right application. Our approach is focused on responsiveness, consistency, and
-                supporting our customersâ€™ operational continuity.</p>
+                supporting our customers operational continuity.</p>
 
               <!-- <div class="info mt-50 wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
                 <a class="btn-one-rounded" href="#0">more about <i class="fa-regular fa-arrow-up-right"></i></a>
@@ -1121,13 +1125,13 @@
                     <option value="7">Financial Advice</option>
                   </select> -->
                   <textarea class="mt-4" name="message" id="message" placeholder="Write a Message"></textarea>
-                  <button type="submit" id="submitBtn" class="btn-two-rounded mt-30">
-                    <span id="btnText">Send Message Us</span>
-                    <span class="spinner" id="spinner"></span>                     
+                  <button type="submit" id="footerSubmitBtn" class="btn-two-rounded mt-30">
+                    <span id="footerBtnText">Send Message Us</span>
+                    <span class="spinner" id="footerSpinner"></span>                     
                     <i class="fa-regular fa-angle-right"></i>
                   </button>
                 </form>
-                <div id="msg"></div>
+                <div id="footerMsg"></div>
               </div>
             </div>
           </div>
@@ -1166,20 +1170,20 @@
 
                                 <div class="sec-title mb-40">
                                     <h2 class="title text-white">Ready Discover More? Contact Us Today!</h2>
-                                    <!-- <p class="text">No credit card requirement itâ€™s full free for all</p> -->
+                                    <!-- <p class="text">No credit card requirement its full free for all</p> -->
                                 </div>
 
-                                <form id="footerContactForm" name="footerContactForm" method="POST" action="https://api.web3forms.com/submit">
+                                <form id="footerSubForm" name="footerSubForm" method="POST" action="https://api.web3forms.com/submit">
                                     <div class="input-feild">
                                         <input name="email" class="required" type="email" placeholder="Email Address*" required autocomplete="email" aria-label="Email address">
-                                        <button type="submit" id="footerSubmitBtn" class="btn-one-rounded" style="background-color: #fff;">
-                                            <span id="footerBtnText">Sign up now</span>
+                                        <button type="submit" id="footerSubmitBtn1" class="btn-one-rounded" style="background-color: #fff;">
+                                            <span id="footerBtnText1">Sign up now</span>
                                             <i class="fa-regular fa-angle-right"></i>
-                                            <span class="footer-spinner" id="footerSpinner" aria-hidden="true"></span>
+                                            <span class="footer-spinner" id="footerSpinner1" aria-hidden="true"></span>
                                         </button>
                                     </div>
                                 </form>
-                                <div id="footerMsg"></div>
+                                <div id="footerMsg1"></div>
                             </div>
                         </div>
                         <div class="col-sm-6 col-lg-3 col-xl-2">
@@ -1289,15 +1293,59 @@
  
         if (data.success) {
           msg.className = 'success';
-          msg.textContent = 'âœ“ Message sent! We\'ll reply soon.';
+          msg.textContent = '✓ Message sent! We\'ll reply soon.';
           this.reset();
         } else {
           msg.className = 'error';
-          msg.textContent = 'âœ— Failed to send. Please try again.';
+          msg.textContent = '✗ Failed to send. Please try again.';
         }
       } catch {
         msg.className = 'error';
-        msg.textContent = 'âœ— Network error. Please try again.';
+        msg.textContent = '✗ Network error. Please try again.';
+      }
+ 
+      msg.style.display = 'block';
+      btn.disabled = false;
+      spinner.style.display = 'none';
+            btnText.textContent = 'Sign up now';
+    });
+  </script>
+
+  <script>
+        document.getElementById('footerSubForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+            const btn = document.getElementById('footerSubmitBtn1');
+            const spinner = document.getElementById('footerSpinner1');
+            const btnText = document.getElementById('footerBtnText1');
+            const msg = document.getElementById('footerMsg1');
+ 
+      btn.disabled = true;
+      spinner.style.display = 'block';
+      btnText.textContent = 'Sending...';
+      msg.style.display = 'none';
+ 
+      const formData = new FormData(this);
+      formData.append("access_key", "18a38983-d5f3-49c9-be04-87823c95625e"); // ðŸ”‘ Replace this
+ 
+      try {
+        console.log("TRy entered");
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+ 
+        if (data.success) {
+          msg.className = 'success';
+          msg.textContent = '✓ Message sent! We\'ll reply soon.';
+          this.reset();
+        } else {
+          msg.className = 'error';
+          msg.textContent = '✗ Failed to send. Please try again.';
+        }
+      } catch {
+        msg.className = 'error';
+        msg.textContent = '✗ Network error. Please try again.';
       }
  
       msg.style.display = 'block';
